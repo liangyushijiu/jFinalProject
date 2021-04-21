@@ -41,14 +41,12 @@ public class GlobalErrorRender extends Render {
             writer.write(getErrorJson());
             writer.flush();
         } catch (IOException e) {
-           throw new RenderException();
-        }finally {
-            if(writer != null){
+            throw new RenderException();
+        } finally {
+            if (writer != null) {
                 writer.close();
             }
         }
-
-
     }
 
 

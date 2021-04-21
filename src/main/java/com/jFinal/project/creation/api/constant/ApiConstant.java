@@ -8,12 +8,10 @@ public class ApiConstant {
      * 成功
      */
     public static final int CODE_SUCCESS = 0;
-
     /**
      * 成功
      */
     public static final String MSG_SUCCESS = "success";
-
     /**
      * 调用方法不存在
      */
@@ -22,7 +20,6 @@ public class ApiConstant {
      * 调用方法不存在
      */
     public static final String MSG_METHOD_ERROR = "调用方法不存在";
-
     /**
      * 调用方法异常
      */

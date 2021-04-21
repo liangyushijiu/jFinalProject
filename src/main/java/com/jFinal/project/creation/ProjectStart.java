@@ -7,9 +7,7 @@ import com.jfinal.server.undertow.UndertowServer;
  * @author 凉雨时旧
  */
 public class ProjectStart {
-
     public static void main(String[] args) {
-        UndertowServer.start(CoreConfig.class,8085,true);
+        UndertowServer.start(CoreConfig.class, 8085, true);
     }
-
 }

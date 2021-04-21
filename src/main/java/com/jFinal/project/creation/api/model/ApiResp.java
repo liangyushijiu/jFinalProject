@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * 返回报文
+ *
  * @author 凉雨时旧
  */
 public class ApiResp {
@@ -14,12 +15,13 @@ public class ApiResp {
     private boolean success = true;
     private int code = ApiConstant.CODE_SUCCESS;
     private String msg = ApiConstant.MSG_SUCCESS;
-    private Map<String, Map<String,Object>> data = new HashMap<>();
+    private Map<String, Map<String, Object>> data = new HashMap<>();
 
-    public ApiResp() { }
+    public ApiResp() {
+    }
 
-    public ApiResp( Map<String, Object> data) {
-        this.data.put("data",data);
+    public ApiResp(Map<String, Object> data) {
+        this.data.put("data", data);
     }
 
     public ApiResp setCode(int code) {
@@ -27,7 +29,7 @@ public class ApiResp {
         return this;
     }
 
-    public ApiResp setMsg(String msg){
+    public ApiResp setMsg(String msg) {
         this.msg = msg;
         return this;
     }

@@ -9,7 +9,6 @@ public class HrRoutes extends Routes {
     @Override
     public void config() {
         setBaseViewPath("/_view/");
-        add("/hr",HrController.class);
-
+        add("/hr", HrController.class);
     }
 }

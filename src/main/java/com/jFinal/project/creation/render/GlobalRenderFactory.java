@@ -9,8 +9,8 @@ import com.jfinal.render.RenderFactory;
 public class GlobalRenderFactory extends RenderFactory {
 
     @Override
-    public Render getErrorRender(int errorCode, String view){
-        return new GlobalErrorRender(errorCode,view);
+    public Render getErrorRender(int errorCode, String view) {
+        return new GlobalErrorRender(errorCode, view);
     }
 
 }

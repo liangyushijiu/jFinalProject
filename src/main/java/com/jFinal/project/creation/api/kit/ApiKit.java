@@ -9,7 +9,6 @@ import com.jFinal.project.creation.api.model.ApiResp;
  */
 public class ApiKit {
     private ApiKit () {}
-
     /**
      * 方法不存在
      * @return apiResp
@@ -17,11 +16,7 @@ public class ApiKit {
     public static ApiResp getMethodError() {
         return new ApiResp().setSuccess(false).setCode(ApiConstant.CODE_METHOD_ERROR).setMsg(ApiConstant.MSG_METHOD_ERROR);
     }
-
     public static ApiResp getMethodHandlerError() {
         return new ApiResp().setSuccess(false).setCode(ApiConstant.CODE_METHOD_HANDLER_ERROR).setMsg(ApiConstant.MSG_METHOD_HANDLER_ERROR);
     }
-
-
-
 }
