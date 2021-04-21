@@ -4,6 +4,7 @@ import com.jFinal.project.creation.common.CoreRoutes;
 import com.jFinal.project.creation.common.json.CoreMixedJsonFactory;
 import com.jFinal.project.creation.render.GlobalRenderFactory;
 import com.jfinal.config.*;
+import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -11,18 +12,17 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
 import com.mysql.cj.util.StringUtils;
 import org.apache.log4j.PropertyConfigurator;
+import com.jFinal.project.creation.common.model._MappingKit;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author 凉雨时旧
  */
 public class CoreConfig extends JFinalConfig {
     private static Log log;
+
+    static Prop p;
 
     /**
      * 配置常量
@@ -102,6 +102,7 @@ public class CoreConfig extends JFinalConfig {
         // 显示SQL语句
         arp.setShowSql(true);
         // 所有映射在 MappingKit 中自动化搞定
+        _MappingKit.mapping(arp);
 
         plugins.add(arp);
 
@@ -121,15 +122,17 @@ public class CoreConfig extends JFinalConfig {
     }
 
 
-    public static DruidPlugin createDruidPlugin(String prefix) {
+    public static DruidPlugin createDruidPlugin() {
         //配置数据库
-        String password = Arrays.toString(PropKit.get(prefix + ".jdbc.password").getBytes(StandardCharsets.UTF_8));
-        DruidPlugin dp = new DruidPlugin(PropKit.get(prefix + ".jdbc.url"),PropKit.get(prefix + ".jdbc.username"),password);
-        if (PropKit.getBoolean("devMode",true)){
-            dp.setFilters("stat,wall");
-        }else {
-            dp.setFilters("wall");
+        loadConfig();
+
+        return new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password"));
+    }
+
+
+    static void loadConfig() {
+        if (p == null) {
+            p = PropKit.useFirstFound("application.properties");
         }
-        return dp;
     }
 }

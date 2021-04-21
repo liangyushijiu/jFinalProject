@@ -6,4 +6,7 @@ import com.jfinal.core.Controller;
  * @author 凉雨时旧
  */
 public class HrController extends Controller {
+
+
+
 }
