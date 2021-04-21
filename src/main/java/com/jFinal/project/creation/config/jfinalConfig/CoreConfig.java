@@ -27,26 +27,26 @@ public class CoreConfig extends JFinalConfig {
         loadConfig();
 
         me.setDevMode(p.getBoolean("devMode", false));
-
         /**
          * 支持 Controller、Interceptor、Validator 之中使用 @Inject 注入业务层，并且自动实现 AOP
          * 注入动作支持任意深度并自动处理循环注入
          */
         me.setInjectDependency(true);
-
         // 配置对超类中的属性进行注入
         me.setInjectSuperClass(true);
-
+        me.setDevMode(true);
     }
 
     /**
      * 配置路由
+     *
      * @param routes 路由
      */
     @Override
     public void configRoute(Routes routes) {
         routes.setMappingSuperClass(true);
         routes.add(new CoreRoutes());
+        /*routes.scan("com.jFinal.project.creation.business.");*/
     }
 
     @Override
@@ -62,10 +62,8 @@ public class CoreConfig extends JFinalConfig {
      */
     @Override
     public void configPlugin(Plugins plugins) {
-        DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"),
-                PropKit.get("password").trim());
+        DruidPlugin druidPlugin = createDruidPlugin();
         plugins.add(druidPlugin);
-
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         // 显示SQL语句
@@ -78,7 +76,6 @@ public class CoreConfig extends JFinalConfig {
     public static DruidPlugin createDruidPlugin() {
         //配置数据库
         loadConfig();
-
         return new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password"));
     }
 

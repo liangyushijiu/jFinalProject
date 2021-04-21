@@ -9,7 +9,7 @@ import com.jfinal.server.undertow.UndertowServer;
 public class ProjectStart {
 
     public static void main(String[] args) {
-        UndertowServer.start(CoreConfig.class);
+        UndertowServer.start(CoreConfig.class,8085,true);
     }
 
 }

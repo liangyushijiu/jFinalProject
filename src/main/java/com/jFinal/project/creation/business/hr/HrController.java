@@ -7,10 +7,9 @@ import com.jfinal.ext.interceptor.GET;
 /**
  * @author 凉雨时旧
  */
+
 public class HrController extends Controller {
-
-
-        @Before({GET.class})
+    @Before({GET.class})
     public void index() {
         renderText("Hello JFinal World.");
     }

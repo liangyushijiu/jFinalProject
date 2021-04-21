@@ -17,24 +17,16 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <java.servlet.version>3.1.0</java.servlet.version>
-    <jfinal.version>4.9</jfinal.version>
+    <jfinal.version>4.9.08</jfinal.version>
     <jfinal.cos.version>2020.4</jfinal.cos.version>
     <mysql.version>8.0.20</mysql.version>
     <commons.lang3>3.12.0</commons.lang3>
     <log4.version>1.2.17</log4.version>
     <druid.version>1.2.5</druid.version>
-    <jfinal-undertow.version>2.1</jfinal-undertow.version>
+    <jfinal-undertow.version>2.5</jfinal-undertow.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>${java.servlet.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
     <dependency>
       <groupId>com.jfinal</groupId>
       <artifactId>jfinal</artifactId>
@@ -77,7 +69,12 @@
       <version>${druid.version}</version>
     </dependency>
 
-
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
 
 
 
