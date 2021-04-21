@@ -1,26 +1,19 @@
 package com.jFinal.project.creation.config.jfinalConfig;
 
-import com.jFinal.project.creation.common.CoreRoutes;
-import com.jFinal.project.creation.common.json.CoreMixedJsonFactory;
-import com.jFinal.project.creation.render.GlobalRenderFactory;
+import com.jFinal.project.creation.routes.CoreRoutes;
 import com.jfinal.config.*;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
-import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
-import com.mysql.cj.util.StringUtils;
-import org.apache.log4j.PropertyConfigurator;
 import com.jFinal.project.creation.common.model._MappingKit;
-
-import java.io.File;
 
 /**
  * @author 凉雨时旧
  */
 public class CoreConfig extends JFinalConfig {
-    private static Log log;
+
 
     static Prop p;
 
@@ -31,47 +24,23 @@ public class CoreConfig extends JFinalConfig {
      */
     @Override
     public void configConstant(Constants me) {
-        String homeDirectory = System.getProperty("directory");
-        if (StringUtils.isEmptyOrWhitespaceOnly(homeDirectory)) {
-            homeDirectory = "";
-        }
+        loadConfig();
 
-        File log4j = new File(homeDirectory + "log4j.properties");
-        if (log4j.exists()) {
-            PropertyConfigurator.configure(log4j.getAbsolutePath());
-            //未初始化不能应用
-            System.out.println("load log4j.properties. path:" + log4j.getAbsolutePath());
-        }
+        me.setDevMode(p.getBoolean("devMode", false));
 
-        log = Log.getLog(CoreConfig.class);
-        log.info("CoreConfig.class");
-        //加载少量必要配置
-        String configName = "appConfig.properties";
-        File config = new File(homeDirectory + configName);
-        if (config.exists()) {
-            log.info("load user home dir properties:" + homeDirectory + configName);
-            PropKit.use(config);
-        } else {
-            log.info("load project properties:" + configName);
-            PropKit.use(configName);
-        }
+        /**
+         * 支持 Controller、Interceptor、Validator 之中使用 @Inject 注入业务层，并且自动实现 AOP
+         * 注入动作支持任意深度并自动处理循环注入
+         */
+        me.setInjectDependency(true);
 
-        log.info("load project properties success");
-
-        me.setDevMode(PropKit.getBoolean("devMode" + false));
-
-        me.setRenderFactory(new GlobalRenderFactory());
-
-        me.setJsonFactory(new CoreMixedJsonFactory());
-
-        log.info("init config end");
-
+        // 配置对超类中的属性进行注入
+        me.setInjectSuperClass(true);
 
     }
 
     /**
      * 配置路由
-     *
      * @param routes 路由
      */
     @Override
@@ -82,7 +51,8 @@ public class CoreConfig extends JFinalConfig {
 
     @Override
     public void configEngine(Engine engine) {
-
+        engine.addSharedFunction("/common/_layout.html");
+        engine.addSharedFunction("/common/_paginate.html");
     }
 
     /**
@@ -92,7 +62,6 @@ public class CoreConfig extends JFinalConfig {
      */
     @Override
     public void configPlugin(Plugins plugins) {
-        log.info("init plugin");
         DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"),
                 PropKit.get("password").trim());
         plugins.add(druidPlugin);
@@ -103,12 +72,14 @@ public class CoreConfig extends JFinalConfig {
         arp.setShowSql(true);
         // 所有映射在 MappingKit 中自动化搞定
         _MappingKit.mapping(arp);
-
         plugins.add(arp);
+    }
 
+    public static DruidPlugin createDruidPlugin() {
+        //配置数据库
+        loadConfig();
 
-
-
+        return new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password"));
     }
 
     @Override
@@ -120,15 +91,6 @@ public class CoreConfig extends JFinalConfig {
     public void configHandler(Handlers handlers) {
 
     }
-
-
-    public static DruidPlugin createDruidPlugin() {
-        //配置数据库
-        loadConfig();
-
-        return new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password"));
-    }
-
 
     static void loadConfig() {
         if (p == null) {

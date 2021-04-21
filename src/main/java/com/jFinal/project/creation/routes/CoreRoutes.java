@@ -1,5 +1,6 @@
-package com.jFinal.project.creation.common;
+package com.jFinal.project.creation.routes;
 
+import com.jFinal.project.creation.business.hr.HrRoutes;
 import com.jfinal.config.Routes;
 
 /**
@@ -9,6 +10,6 @@ public class CoreRoutes extends Routes {
     @Override
     public void config() {
         setBaseViewPath("/_view");
-        add(null);
+        add(new HrRoutes());
     }
 }
