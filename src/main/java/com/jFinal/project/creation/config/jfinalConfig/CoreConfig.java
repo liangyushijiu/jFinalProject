@@ -51,8 +51,8 @@ public class CoreConfig extends JFinalConfig {
 
     @Override
     public void configEngine(Engine engine) {
-        engine.addSharedFunction("/common/_layout.html");
-        engine.addSharedFunction("/common/_paginate.html");
+        /*engine.addSharedFunction("/common/_layout.html");
+        engine.addSharedFunction("/common/_paginate.html");*/
     }
 
     /**
